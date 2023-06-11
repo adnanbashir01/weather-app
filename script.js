@@ -6,13 +6,6 @@ const cardBody = document.querySelector('.card-body__mine');
 const searchForm = document.querySelector('#mainSearch');
 const city = document.querySelector('#city');
 const formInput = document.querySelector('#formInput')
-const temp = document.querySelector('#temp');
-const feelsLike = document.querySelector('#feelsLike');
-const maxTemp = document.querySelector('#maxTemp');
-const minTemp = document.querySelector('#minTemp');
-const humidity = document.querySelector('#humidity');
-const cloudCover = document.querySelector('#cloudCover');
-const windSpeed = document.querySelector('#windSpeed');
 const sunnyCondition = document.querySelector('#sunnyCondition');
 const checkAgain = document.querySelector('.checkAgain');
 
@@ -39,7 +32,6 @@ const currentLocation = function () {
 
 // Show weather for current location
 currentLocation();
-
 
 // Render Weatehr 
 const renderWeather = function (weather, cityName) {
@@ -112,7 +104,6 @@ const checkWether = async function (city) {
 
 // To UpperCase 
 function capitalFirst(string) {
-    // Return an array containing the first letter and the rest of the letters.
     return [string[0].toUpperCase(), string.slice(1)].join('');
 }
 
@@ -121,7 +112,6 @@ const renderLoading = function () {
     cardBody.innerHTML = `<div class="spinner"></div>`;
 }
 
-
 searchForm.addEventListener('submit', function (e) {
     e.preventDefault();
     renderLoading();
@@ -129,6 +119,6 @@ searchForm.addEventListener('submit', function (e) {
     checkWether(cityCheck);
 });
 
-checkAgain.addEventListener('click', function (e) {
-    checkWether(cityCheck);
-})
+// checkAgain.addEventListener('click', function (e) {
+//     checkWether(cityCheck);
+// });
