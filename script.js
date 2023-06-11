@@ -11,6 +11,7 @@ const minTemp = document.querySelector('#minTemp');
 const humidity = document.querySelector('#humidity');
 const cloudCover = document.querySelector('#cloudCover');
 const windSpeed = document.querySelector('#windSpeed');
+const sunnyCondition = document.querySelector('#sunnyCondition');
 
 // Render Weatehr 
 const renderWeather = function (weather) {
@@ -22,6 +23,13 @@ const renderWeather = function (weather) {
     cloudCover.innerText = weather.cloudCover;
     windSpeed.innerText = weather.wind
     city.innerText = weather.city;
+
+    // Compute the sunny condition
+    // sunnyCondition.innerText = weather.cloudCover
+    if (weather.cloudCover < 20) sunnyCondition.innerText = 'Sunny 🌞'
+    if (weather.cloudCover >= 20 && weather.cloudCover <= 50) sunnyCondition.innerText = 'Mostly Sunny 🌤'
+    if (weather.cloudCover >= 51 && weather.cloudCover <= 75) sunnyCondition.innerText = 'Mostly Cloudy 🌥';
+    if (weather.cloudCover >= 75) sunnyCondition.innerText = 'Cloudy ☁';
 }
 
 
