@@ -1,4 +1,4 @@
-import '/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+// import '/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
 // Access the elements
 const searchForm = document.querySelector('#mainSearch');
