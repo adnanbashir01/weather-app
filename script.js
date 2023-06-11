@@ -14,6 +14,31 @@ const windSpeed = document.querySelector('#windSpeed');
 const sunnyCondition = document.querySelector('#sunnyCondition');
 const checkAgain = document.querySelector('.checkAgain');
 
+// Get the current location
+const currentLocation = function () {
+    // Promisify the geolocation 
+    const getPosition = function () {
+        return new Promise(function (resolve, reject) {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        })
+    }
+
+    getPosition().then(pos => {
+        const { latitude: lat, longitude: lng } = pos.coords
+        return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json&auth=224116842654155321462x108681`)
+    })
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            checkWether(data.city);
+        })
+}
+
+// Show weather for current location
+currentLocation();
+
+
 // Render Weatehr 
 const renderWeather = function (weather) {
     temp.innerText = weather.temp;
@@ -47,8 +72,6 @@ const checkWether = async function (city) {
     try {
         const response = await fetch(url, options);
         const result = await response.json();
-        const sunset = new Date(result.sunset);
-        console.log(sunset);
 
         // Save the result in Object
         const cityWeather = {
@@ -65,7 +88,6 @@ const checkWether = async function (city) {
         }
 
         renderWeather(cityWeather);
-        console.log(cityWeather);
     } catch (error) {
         console.error(error);
     }
@@ -77,9 +99,7 @@ function capitalFirst(string) {
     return [string[0].toUpperCase(), string.slice(1)].join('');
 }
 
-let cityCheck;
 
-checkWether('Multan');
 searchForm.addEventListener('submit', function (e) {
     e.preventDefault();
     cityCheck = capitalFirst(formInput.value);
