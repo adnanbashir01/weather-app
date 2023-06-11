@@ -24,8 +24,6 @@ const renderWeather = function (weather) {
     city.innerText = weather.city;
 }
 
-// Fetch the weather data
-
 
 const checkWether = async function (city) {
     const url = `https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=${city}`;
@@ -64,8 +62,15 @@ const checkWether = async function (city) {
     }
 }
 
+// To UpperCase 
+function capitalFirst(string) {
+    // Return an array containing the first letter and the rest of the letters.
+    return [string[0].toUpperCase(), string.slice(1)].join('');
+}
+
 checkWether('Multan');
 searchForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    checkWether(formInput.value);
+    const city = capitalFirst(formInput.value);
+    checkWether(city);
 });
