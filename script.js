@@ -16,7 +16,6 @@ const windSpeed = document.querySelector('#windSpeed');
 const sunnyCondition = document.querySelector('#sunnyCondition');
 const checkAgain = document.querySelector('.checkAgain');
 
-console.log(navbar);
 // Get the current location
 const currentLocation = function () {
     // Promisify the geolocation 
@@ -43,7 +42,7 @@ currentLocation();
 
 
 // Render Weatehr 
-const renderWeather = function (weather) {
+const renderWeather = function (weather, cityName) {
     try {
         if (!weather.temp) {
             const alert = `
@@ -55,7 +54,6 @@ const renderWeather = function (weather) {
             navbar.insertAdjacentHTML("afterend", alert);
             throw new Error('Weather report not found');
         }
-        console.log(weather);
         cardBody.innerHTML = '';
         const html = `
                 <h1 class="card-title pricing-card-title">
@@ -63,12 +61,12 @@ const renderWeather = function (weather) {
                   ><small class="text-body-secondary fw-light">&deg;C</small>
                 </h1>
                 <ul class="list-unstyled mt-3 mb-4">
-                  <li>Feels Like: <span id="feelsLike">${weather.feelsLike}</span>&deg;C</li>
-                  <li>Max Temp. Today: <span id="maxTemp">${weather.maxTemp}</span>&deg;C</li>
-                  <li>Min Temp. Today: <span id="minTemp">${weather.minTemp}</span>&deg;C</li>
+                  <li>Feels Like: <span id="feelsLike">${weather.feels_like}</span>&deg;C</li>
+                  <li>Max Temp. Today: <span id="maxTemp">${weather.max_temp}</span>&deg;C</li>
+                  <li>Min Temp. Today: <span id="minTemp">${weather.min_temp}</span>&deg;C</li>
                   <li>Humidity: <span id="humidity">${weather.humidity}</span>%</li>
-                  <li>Cloud Cover: <span id="cloudCover">${weather.cloudCover}</span>%</li>
-                  <li>Wind Speed: <span id="windSpeed">${weather.wind}</span>km/h</li>
+                  <li>Cloud Cover: <span id="cloudCover">${weather.cloud_pct}</span>%</li>
+                  <li>Wind Speed: <span id="windSpeed">${weather.wind_speed}</span>km/h</li>
                 </ul> 
                 <button
                   type="button"
@@ -78,17 +76,18 @@ const renderWeather = function (weather) {
                 </button>
                 `;
         cardBody.insertAdjacentHTML("afterbegin", html);
-        city.innerText = weather.city;
+        city.innerText = cityName;
 
         // Compute the sunny condition
-        if (weather.cloudCover < 20) sunnyCondition.innerText = 'Sunny 🌞'
-        if (weather.cloudCover >= 20 && weather.cloudCover <= 50) sunnyCondition.innerText = 'Mostly Sunny 🌤'
-        if (weather.cloudCover >= 51 && weather.cloudCover <= 75) sunnyCondition.innerText = 'Mostly Cloudy 🌥';
-        if (weather.cloudCover >= 75) sunnyCondition.innerText = 'Cloudy ☁';
+        if (weather.cloud_pct < 20) sunnyCondition.innerText = 'Sunny 🌞'
+        if (weather.cloud_pct >= 20 && weather.cloud_pct <= 50) sunnyCondition.innerText = 'Mostly Sunny 🌤'
+        if (weather.cloud_pct >= 51 && weather.cloud_pct <= 75) sunnyCondition.innerText = 'Mostly Cloudy 🌥';
+        if (weather.cloud_pct >= 75) sunnyCondition.innerText = 'Cloudy ☁';
     } catch (error) {
         console.log(error);
     }
 }
+
 
 
 const checkWether = async function (city) {
@@ -105,21 +104,7 @@ const checkWether = async function (city) {
         const response = await fetch(url, options);
         const result = await response.json();
 
-        // Save the result in Object
-        const cityWeather = {
-            city: city,
-            temp: result.temp,
-            minTemp: result.min_temp,
-            maxTemp: result.max_temp,
-            humidity: result.humidity,
-            feelsLike: result.feels_like,
-            sunrise: result.sunrise,
-            sunset: result.sunset,
-            wind: result.wind_speed,
-            cloudCover: result.cloud_pct
-        }
-
-        renderWeather(cityWeather);
+        renderWeather(result, city);
     } catch (error) {
         console.error(error);
     }
