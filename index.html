@@ -78,7 +78,7 @@
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container min-vh-100">
       <h1 class="text-center py-4"><span id="city">City</span> Weather</h1>
       <main>
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
@@ -132,7 +132,10 @@
                   <li>Cloud Cover: <span id="cloudCover">--</span>%</li>
                   <li>Wind Speed: <span id="windSpeed">--</span>km/h</li>
                 </ul>
-                <button type="button" class="w-100 btn btn-lg btn-primary">
+                <button
+                  type="button"
+                  class="w-100 btn btn-lg btn-primary checkAgain"
+                >
                   Check Again
                 </button>
               </div>
@@ -161,9 +164,9 @@
           </div>
         </div>
 
-        <h2 class="display-6 text-center mb-4">Other Cities</h2>
+        <!-- <h2 class="display-6 text-center mb-4">Other Cities</h2> -->
 
-        <div class="table-responsive">
+        <!-- <div class="table-responsive">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -218,8 +221,12 @@
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> -->
       </main>
+
+      <footer class="footer text-center">
+        All rights reserved &copy; e-weather app | 2023
+      </footer>
     </div>
 
     <script src="assets/bootstrap.min.js"></script>

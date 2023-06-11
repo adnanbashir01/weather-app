@@ -12,6 +12,7 @@ const humidity = document.querySelector('#humidity');
 const cloudCover = document.querySelector('#cloudCover');
 const windSpeed = document.querySelector('#windSpeed');
 const sunnyCondition = document.querySelector('#sunnyCondition');
+const checkAgain = document.querySelector('.checkAgain');
 
 // Render Weatehr 
 const renderWeather = function (weather) {
@@ -76,9 +77,15 @@ function capitalFirst(string) {
     return [string[0].toUpperCase(), string.slice(1)].join('');
 }
 
+let cityCheck;
+
 checkWether('Multan');
 searchForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    const city = capitalFirst(formInput.value);
-    checkWether(city);
+    cityCheck = capitalFirst(formInput.value);
+    checkWether(cityCheck);
 });
+
+checkAgain.addEventListener('click', function (e) {
+    checkWether(cityCheck);
+})
