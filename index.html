@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script
+      defer
+      src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    ></script> -->
+    <script defer type="module" src="script.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">e-Weather</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Check Weather</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Guidelines</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Select Weather
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Bahawalpur</a></li>
+                <li><a class="dropdown-item" href="#">Multan</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Rawalpindi</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Developers</a>
+            </li>
+          </ul>
+          <form class="d-flex" id="mainSearch" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              id="formInput"
+              placeholder="Search Weather"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <h1 class="text-center py-4"><span id="city">City</span> Weather</h1>
+      <main>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+          <div class="col">
+            <!-- <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Free</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">
+                  $0<small class="text-body-secondary fw-light">/mo</small>
+                </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>10 users included</li>
+                  <li>2 GB of storage</li>
+                  <li>Email support</li>
+                  <li>Help center access</li>
+                </ul>
+                <button
+                  type="button"
+                  class="w-100 btn btn-lg btn-outline-primary"
+                >
+                  Sign up for free
+                </button>
+              </div>
+            </div> -->
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Mostly Sunny 🌞</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">
+                  <span id="temp">39</span
+                  ><small class="text-body-secondary fw-light">&deg;C</small>
+                </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <!-- <li>Feels Like: <span id="feelsLike">39</span>&deg;C</li>
+                  <li>Max Temp. Today: <span id="maxTemp">39</span>&deg;C</li>
+                  <li>Min Temp. Today: <span id="minTemp">39</span>&deg;C</li>
+                  <li>Humidity: <span id="humidity">26</span>%</li>
+                  <li>Cloud Cover: <span id="cloudCover">4</span>%</li>
+                  <li>Wind Speed: <span id="windSpeed">4</span>km/h</li> -->
+                  <li>Feels Like: <span id="feelsLike">--</span>&deg;C</li>
+                  <li>Max Temp. Today: <span id="maxTemp">--</span>&deg;C</li>
+                  <li>Min Temp. Today: <span id="minTemp">--</span>&deg;C</li>
+                  <li>Humidity: <span id="humidity">--</span>%</li>
+                  <li>Cloud Cover: <span id="cloudCover">--</span>%</li>
+                  <li>Wind Speed: <span id="windSpeed">--</span>km/h</li>
+                </ul>
+                <button type="button" class="w-100 btn btn-lg btn-primary">
+                  Check Again
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <!-- <div class="card mb-4 rounded-3 shadow-sm border-primary">
+              <div class="card-header py-3 text-bg-primary border-primary">
+                <h4 class="my-0 fw-normal">Enterprise</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">
+                  $29<small class="text-body-secondary fw-light">/mo</small>
+                </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>30 users included</li>
+                  <li>15 GB of storage</li>
+                  <li>Phone and email support</li>
+                  <li>Help center access</li>
+                </ul>
+                <button type="button" class="w-100 btn btn-lg btn-primary">
+                  Contact us
+                </button>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <h2 class="display-6 text-center mb-4">Other Cities</h2>
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Country</th>
+                <th scope="col">Cloud Count</th>
+                <th scope="col">Temperature</th>
+                <th scope="col">Feels Like</th>
+                <th scope="col">Min. Temp</th>
+                <th scope="col">Max. Temp</th>
+                <th scope="col">Sunrise</th>
+                <th scope="col">Sunset</th>
+                <th scope="col">Wind Degree</th>
+                <th scope="col">Wind Speed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Bahawalpur</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">Multan</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">Rawalpindi</th>
+                <td>Bhai</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+                <td>@fat</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
