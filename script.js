@@ -1,6 +1,8 @@
 // import '/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
 // Access the elements
+const navbar = document.querySelector('.navbar');
+const cardBody = document.querySelector('.card-body__mine');
 const searchForm = document.querySelector('#mainSearch');
 const city = document.querySelector('#city');
 const formInput = document.querySelector('#formInput')
@@ -14,6 +16,7 @@ const windSpeed = document.querySelector('#windSpeed');
 const sunnyCondition = document.querySelector('#sunnyCondition');
 const checkAgain = document.querySelector('.checkAgain');
 
+console.log(navbar);
 // Get the current location
 const currentLocation = function () {
     // Promisify the geolocation 
@@ -41,21 +44,50 @@ currentLocation();
 
 // Render Weatehr 
 const renderWeather = function (weather) {
-    temp.innerText = weather.temp;
-    feelsLike.innerText = weather.feelsLike;
-    maxTemp.innerText = weather.maxTemp;
-    minTemp.innerText = weather.minTemp;
-    humidity.innerText = weather.humidity;
-    cloudCover.innerText = weather.cloudCover;
-    windSpeed.innerText = weather.wind
-    city.innerText = weather.city;
+    try {
+        if (!weather.temp) {
+            const alert = `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Report not found!</strong> Please search for a valid city.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            `;
+            navbar.insertAdjacentHTML("afterend", alert);
+            throw new Error('Weather report not found');
+        }
+        console.log(weather);
+        cardBody.innerHTML = '';
+        const html = `
+                <h1 class="card-title pricing-card-title">
+                  <span id="temp">${weather.temp}</span
+                  ><small class="text-body-secondary fw-light">&deg;C</small>
+                </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Feels Like: <span id="feelsLike">${weather.feelsLike}</span>&deg;C</li>
+                  <li>Max Temp. Today: <span id="maxTemp">${weather.maxTemp}</span>&deg;C</li>
+                  <li>Min Temp. Today: <span id="minTemp">${weather.minTemp}</span>&deg;C</li>
+                  <li>Humidity: <span id="humidity">${weather.humidity}</span>%</li>
+                  <li>Cloud Cover: <span id="cloudCover">${weather.cloudCover}</span>%</li>
+                  <li>Wind Speed: <span id="windSpeed">${weather.wind}</span>km/h</li>
+                </ul> 
+                <button
+                  type="button"
+                  class="w-100 btn btn-lg btn-primary checkAgain"
+                >
+                  Check Again
+                </button>
+                `;
+        cardBody.insertAdjacentHTML("afterbegin", html);
+        city.innerText = weather.city;
 
-    // Compute the sunny condition
-    // sunnyCondition.innerText = weather.cloudCover
-    if (weather.cloudCover < 20) sunnyCondition.innerText = 'Sunny 🌞'
-    if (weather.cloudCover >= 20 && weather.cloudCover <= 50) sunnyCondition.innerText = 'Mostly Sunny 🌤'
-    if (weather.cloudCover >= 51 && weather.cloudCover <= 75) sunnyCondition.innerText = 'Mostly Cloudy 🌥';
-    if (weather.cloudCover >= 75) sunnyCondition.innerText = 'Cloudy ☁';
+        // Compute the sunny condition
+        if (weather.cloudCover < 20) sunnyCondition.innerText = 'Sunny 🌞'
+        if (weather.cloudCover >= 20 && weather.cloudCover <= 50) sunnyCondition.innerText = 'Mostly Sunny 🌤'
+        if (weather.cloudCover >= 51 && weather.cloudCover <= 75) sunnyCondition.innerText = 'Mostly Cloudy 🌥';
+        if (weather.cloudCover >= 75) sunnyCondition.innerText = 'Cloudy ☁';
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -99,9 +131,15 @@ function capitalFirst(string) {
     return [string[0].toUpperCase(), string.slice(1)].join('');
 }
 
+const renderLoading = function () {
+    sunnyCondition.innerText = 'Loading...';
+    cardBody.innerHTML = `<div class="spinner"></div>`;
+}
+
 
 searchForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    renderLoading();
     cityCheck = capitalFirst(formInput.value);
     checkWether(cityCheck);
 });
